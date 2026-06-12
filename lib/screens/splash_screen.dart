@@ -110,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
                 const Text(
 
-                  'المنصة التي تربط المواهب بالفرص',
+                  'المنصة التي تربط المواهب بالفرصt',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Cairo',
