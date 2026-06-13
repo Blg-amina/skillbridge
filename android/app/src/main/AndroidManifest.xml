@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<!-- هذا السطر ضروري لـ Android 13 وما فوق -->
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <application
         android:label="jisrelmahara_app"
         android:name="${applicationName}"
