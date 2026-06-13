@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jisrelmahara_app/screens/onboarding_screen.dart';
 import 'package:jisrelmahara_app/screens/splash_screen.dart';
 
@@ -17,6 +18,16 @@ class SkillBridgeApp extends StatelessWidget {
     return MaterialApp(
       title: 'SkillBridge DZ',
       debugShowCheckedModeBanner: false, // Bache n7ayou hadik l'bande rouge ta3 "DEBUG"
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ar', 'SA'),
+        Locale('en', 'US'),
+      ],
+      locale: const Locale('ar', 'SA'),
       theme: ThemeData(
         fontFamily: 'Cairo', // L'ecriture li mfahemin 3liha
         colorScheme: ColorScheme.fromSeed(

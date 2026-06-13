@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jisrelmahara_app/screens/roleselection_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -33,10 +34,10 @@ class _LoginScreenState extends State<LoginScreen> {
               // --- Header Section (Navy Blue Background) ---
               Container(
                 width: double.infinity,
-                height: 270,
+                height: 180,
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 40,
-                  bottom: 40,
+                  top: MediaQuery.of(context).padding.top + 15,
+                  bottom: 15,
                 ),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -50,42 +51,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Logo
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(20),
                       child: Image.asset(
                         'assets/images/image.png',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.fill,
+                        width: 75,
+                        height: 75,
+                        fit: BoxFit.cover,
                       ),
                     ),
 
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
 
                     const Text(
                       'جسر المهارات',
                       style: TextStyle(
                         fontFamily: 'Cairo',
-                        fontSize: 28,
+                        fontSize: 22,
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
-                        letterSpacing: 1.2,
                       ),
                     ),
-
-                    const SizedBox(height: 4),
 
                     const Text(
                       'SkillBridge',
                       style: TextStyle(
                         fontFamily: 'Cairo',
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFFF2A81D),
-                        letterSpacing: 2.0,
                       ),
                     ),
                   ],
@@ -128,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
 
                     // Password Field
                     _buildInputField(
@@ -138,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       isPassword: true,
                     ),
 
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 10),
 
                     // Forgot Password Link
                     Align(
@@ -164,12 +160,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
 
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 15),
 
                     // Sign In Button
                     SizedBox(
                       width: double.infinity,
-                      height: 56,
+                      height: 50,
                       child: ElevatedButton(
                         onPressed: () {
                           // TODO: Implement Login
@@ -193,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
 
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 20),
 
                     // Divider "أو"
                     Row(
@@ -225,15 +221,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 20),
 
                     // Create Account Button
                     SizedBox(
                       width: double.infinity,
-                      height: 56,
+                      height: 50,
                       child: OutlinedButton(
                         onPressed: () {
-                          // TODO: Navigate to Sign Up
+                          // Navigation lel page ta3 Role Selection
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RoleSelectionScreen(),
+                            ),
+                          );
                         },
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(
