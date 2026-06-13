@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'create_project_screen.dart';
+import 'login_screen.dart';
 
 /// Production-ready Company Dashboard Screen matching premium Arabic RTL layout specs.
 class CompanyDashboardScreen extends StatefulWidget {
@@ -335,25 +336,38 @@ class _CompanyDashboardScreenState extends State<CompanyDashboardScreen>
                 ],
               ),
               Container(
-                width: 38,
-                height: 38,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.12),
+                  color: Colors.white.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                  onPressed: () {
-                    _showSnackBar(
-                      'تم النقر على زر الرجوع الخلفي للخروج',
-                      primaryNavy,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                      (route) => false,
                     );
                   },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.logout_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          "تسجيل الخروج",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -872,137 +886,210 @@ class _CompanyDashboardScreenState extends State<CompanyDashboardScreen>
             ],
           ),
           const SizedBox(height: 16),
-          Container(
-            height: 46,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: Colors.grey.shade200),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => _isAnnual = true),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: _isAnnual ? primaryNavy : Colors.transparent,
-                        borderRadius: BorderRadius.circular(30),
+          if (!_isPremiumPlan) ...[
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.grey.shade200),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.03),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'نموذج العمولة',
+                    style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: primaryNavy,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'لا تدفع شيئاً مقدماً. يتم خصم 5% فقط من قيمة المهمة عند إتمامها بنجاح.',
+                    style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 13,
+                      color: textGrey,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _buildCommissionRow('قيمة المشروع', '2,500 دج'),
+                  _buildCommissionRow('العمولة (5%)', '125 دج'),
+                  const Divider(height: 24, color: Colors.grey),
+                  _buildCommissionRow('الإجمالي', '2,625 دج', isBold: true),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _processBillingValidation();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: accentGold,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'سنوي',
+                      child: const Text(
+                        'الموافقة على الشروط ونشر المشروع',
                         style: TextStyle(
                           fontFamily: 'Cairo',
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: _isAnnual ? Colors.white : textGrey,
+                          color: primaryNavy,
                         ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => _isAnnual = false),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: !_isAnnual ? primaryNavy : Colors.transparent,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'شهري',
-                        style: TextStyle(
-                          fontFamily: 'Cairo',
-                          fontWeight: FontWeight.bold,
-                          color: !_isAnnual ? Colors.white : textGrey,
+                ],
+              ),
+            ),
+          ] else ...[
+            Container(
+              height: 46,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => setState(() => _isAnnual = true),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: _isAnnual ? primaryNavy : Colors.transparent,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'سنوي',
+                          style: TextStyle(
+                            fontFamily: 'Cairo',
+                            fontWeight: FontWeight.bold,
+                            color: _isAnnual ? Colors.white : textGrey,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => setState(() => _isAnnual = false),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: !_isAnnual ? primaryNavy : Colors.transparent,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'شهري',
+                          style: TextStyle(
+                            fontFamily: 'Cairo',
+                            fontWeight: FontWeight.bold,
+                            color: !_isAnnual ? Colors.white : textGrey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: primaryNavy,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _isPremiumPlan
-                          ? 'الخطة المميزة'
-                          : 'الخطة المرنة الأساسية',
-                      style: const TextStyle(
-                        fontFamily: 'Cairo',
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.12),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.star_rounded,
-                        color: accentGold,
-                        size: 20,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      _isPremiumPlan ? (_isAnnual ? '2,990' : '299') : '0',
-                      style: const TextStyle(
-                        fontFamily: 'Cairo',
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        _isAnnual ? 'دج / سنوي' : 'دج / شهر',
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: primaryNavy,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _isPremiumPlan
+                            ? 'الخطة المميزة'
+                            : 'الخطة المرنة الأساسية',
                         style: const TextStyle(
                           fontFamily: 'Cairo',
-                          color: textGrey,
-                          fontSize: 13,
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                _buildBulletFeatureLine('نشر عروض عمل ومشاريع غير محدودة'),
-                _buildBulletFeatureLine(
-                  'الوصول الفوري لكافة السير والملفات للمتقدمين',
-                ),
-                _buildBulletFeatureLine(
-                  'دعم فني متكامل ذو أولوية على مدار الساعة 24/7',
-                ),
-                _buildBulletFeatureLine(
-                  'تقارير إحصائية متقدمة لتحليل أداء التوظيف',
-                ),
-              ],
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.12),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.star_rounded,
+                          color: accentGold,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        _isPremiumPlan ? (_isAnnual ? '2,990' : '299') : '0',
+                        style: const TextStyle(
+                          fontFamily: 'Cairo',
+                          color: Colors.white,
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          _isAnnual ? 'دج / سنوي' : 'دج / شهر',
+                          style: const TextStyle(
+                            fontFamily: 'Cairo',
+                            color: textGrey,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  _buildBulletFeatureLine('نشر عروض عمل ومشاريع غير محدودة'),
+                  _buildBulletFeatureLine(
+                    'الوصول الفوري لكافة السير والملفات للمتقدمين',
+                  ),
+                  _buildBulletFeatureLine(
+                    'دعم فني متكامل ذو أولوية على مدار الساعة 24/7',
+                  ),
+                  _buildBulletFeatureLine(
+                    'تقارير إحصائية متقدمة لتحليل أداء التوظيف',
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
           const SizedBox(height: 24),
           Container(
             padding: const EdgeInsets.all(20),
@@ -1105,6 +1192,35 @@ class _CompanyDashboardScreenState extends State<CompanyDashboardScreen>
                 color: Colors.white,
                 fontSize: 12,
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCommissionRow(String label, String value, {bool isBold = false}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'Cairo',
+              fontSize: 14,
+              color: textGrey,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontFamily: 'Cairo',
+              fontSize: 14,
+              color: primaryNavy,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
             ),
           ),
         ],
