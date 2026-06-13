@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jisrelmahara_app/screens/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -39,7 +40,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // Skip Button (تخطي)
                     TextButton(
                       onPressed: () {
-                        // TODO: Navigate to Auth Screen direct
+                        // Navigation directe lel Login bla ma ykamel
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
                       },
                       child: Text(
                         'تخطي',
@@ -54,11 +61,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // Pagination Dots (reversed order to match PageView 0->1->2 in RTL)
                     Row(
                       children: [
-                        _buildDot(isActive: _currentPage == 0),
+                        _buildDot(isActive: _currentPage == 2),
                         const SizedBox(width: 6),
                         _buildDot(isActive: _currentPage == 1),
                         const SizedBox(width: 6),
-                        _buildDot(isActive: _currentPage == 2),
+                        _buildDot(isActive: _currentPage == 0),
                       ],
                     ),
                   ],
@@ -81,19 +88,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       title: 'أنشئ ملفك المهني',
                       description: 'ابرز مهاراتك وخبراتك لتجذب أفضل الشركات',
                     ),
-                    
+
                     // 🔥 Page 2: اكتشف فرص مميزة (Hadi li zadnaha)
                     _buildOnboardingPage(
                       iconWidget: _buildOpportunitiesIllustration(),
                       title: 'اكتشف فرص مميزة',
-                      description: 'تصفح مشاريع حقيقية من شركات رائدة وابدأ\nمسيرتك المهنية',
+                      description:
+                          'تصفح مشاريع حقيقية من شركات رائدة وابدأ\nمسيرتك المهنية',
                     ),
-                    
+
                     // 🔥 Page 3: ابدأ العمل
                     _buildOnboardingPage(
                       iconWidget: _buildGetStartedIllustration(),
                       title: 'ابدأ العمل بنجاح',
-                      description: 'أنجز المشاريع بنجاح واحصل على أموالك بأمان\nعبر المنصة',
+                      description:
+                          'أنجز المشاريع بنجاح واحصل على أموالك بأمان\nعبر المنصة',
                     ),
                   ],
                 ),
@@ -113,7 +122,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           curve: Curves.easeInOut,
                         );
                       } else {
-                        // TODO: Navigate to Auth Screen
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -163,13 +177,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       decoration: BoxDecoration(
         color: isActive ? const Color(0xFFF2A81D) : Colors.grey.shade300,
         borderRadius: BorderRadius.circular(4),
-        boxShadow: isActive ? [
-          BoxShadow(
-            color: const Color(0xFFF2A81D).withOpacity(0.2),
-            blurRadius: 10,
-            spreadRadius: 2,
-          )
-        ] : null,
+        boxShadow: isActive
+            ? [
+                BoxShadow(
+                  color: const Color(0xFFF2A81D).withOpacity(0.2),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ]
+            : null,
       ),
     );
   }
@@ -304,7 +320,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               // Main ID card icon
               const Icon(
-                Icons.assignment_ind_outlined, 
+                Icons.assignment_ind_outlined,
                 size: 60,
                 color: Color(0xFF152D4D), // Navy Blue
               ),
@@ -346,7 +362,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           height: 120,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: const Color(0xFFF2A81D).withOpacity(0.1), // Light gold inner circle
+            color: const Color(
+              0xFFF2A81D,
+            ).withOpacity(0.1), // Light gold inner circle
             border: Border.all(
               color: const Color(0xFFF2A81D).withOpacity(0.3),
               width: 1,
