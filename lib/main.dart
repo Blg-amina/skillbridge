@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jisrelmahara_app/screens/onboarding_screen1.dart';
 import 'package:jisrelmahara_app/screens/splash_screen.dart';
 
 // Bédli l'chemin 3la 7sab win 7attiti le fichier ta3 splash screen
@@ -26,6 +27,10 @@ class SkillBridgeApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const SplashScreen(),
+      routes: {
+        '/onboarding': (context) => const OnboardingScreen(),
+        // '/auth': (context) => const AuthScreen(), // Nst7a9ouha mba3d ki nzidou l'auth screen
+      },
     );
   }
 }

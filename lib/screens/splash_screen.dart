@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -8,13 +9,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late Timer _timer;
+
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 3), () {
+    _timer = Timer(const Duration(seconds: 3), () {
+      if (!mounted) return;
+
       Navigator.pushReplacementNamed(context, '/onboarding');
     });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -28,7 +39,11 @@ class _SplashScreenState extends State<SplashScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0xFF0F1C2E), Color(0xFF152D4D), Color(0xFF1A3A52)],
+              colors: [
+                Color(0xFF0F1C2E),
+                Color(0xFF152D4D),
+                Color(0xFF1A3A52),
+              ],
             ),
           ),
           child: SafeArea(
@@ -36,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 const Spacer(flex: 3),
 
-                // Logo
+                // LOGO
                 Stack(
                   alignment: Alignment.center,
                   children: [
@@ -89,7 +104,6 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontSize: 34,
                     fontWeight: FontWeight.w900,
                     color: Colors.white,
-                    letterSpacing: 1.2,
                   ),
                 ),
 
@@ -109,13 +123,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(height: 18),
 
                 const Text(
-
-                  'المنصة التي تربط المواهب بالفرصr',
+                  'المنصة التي تربط المواهب بالفرص',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Cairo',
                     fontSize: 15,
-                    fontWeight: FontWeight.w500,
                     color: Colors.white70,
                   ),
                 ),
@@ -169,24 +181,15 @@ class _LoadingDotsState extends State<LoadingDots>
         final active = current == index;
 
         return AnimatedOpacity(
-          duration: const Duration(milliseconds: 250),
+          duration: const Duration(milliseconds: 200),
           opacity: active ? 1.0 : 0.25,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 6),
             width: 10,
             height: 10,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFFF2A81D),
-              boxShadow: active
-                  ? [
-                      BoxShadow(
-                        color: const Color(0xFFF2A81D).withOpacity(0.6),
-                        blurRadius: 12,
-                        spreadRadius: 1,
-                      ),
-                    ]
-                  : null,
+              color: Color(0xFFF2A81D),
             ),
           ),
         );
@@ -198,7 +201,11 @@ class _LoadingDotsState extends State<LoadingDots>
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [buildDot(0), buildDot(1), buildDot(2)],
+      children: [
+        buildDot(0),
+        buildDot(1),
+        buildDot(2),
+      ],
     );
   }
 }
