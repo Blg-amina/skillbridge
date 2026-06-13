@@ -197,26 +197,29 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
 
   PreferredSizeWidget _buildPremiumAppBar() {
     return AppBar(
-      backgroundColor: primaryNavy,
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_forward_ios_rounded,
-          color: Colors.white,
-        ),
-        onPressed: () => Navigator.of(context).pop(),
+  backgroundColor: primaryNavy,
+  elevation: 0,
+  automaticallyImplyLeading: false,
+  actions: [
+    IconButton(
+      icon: const Icon(
+        Icons.arrow_forward_ios_rounded,
+        color: Colors.white,
       ),
-      title: const Text(
-        'نشر مشروع جديد',
-        style: TextStyle(
-          fontFamily: 'Cairo',
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-          fontSize: 18,
-        ),
-      ),
-      centerTitle: true,
-    );
+      onPressed: () => Navigator.of(context).pop(),
+    ),
+  ],
+  title: const Text(
+    'نشر مشروع جديد',
+    style: TextStyle(
+      fontFamily: 'Cairo',
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      fontSize: 18,
+    ),
+  ),
+  centerTitle: true,
+);
   }
 
   Widget _buildSectionTitle(String title) {

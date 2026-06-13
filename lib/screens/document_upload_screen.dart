@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:jisrelmahara_app/screens/company_dashboard_screen.dart';
 
 class DocumentUploadScreen extends StatefulWidget {
-  const DocumentUploadScreen({super.key});
+  final String companyName;
+
+  const DocumentUploadScreen({
+    super.key,
+    this.companyName = 'شركة الابتكار التقني',
+  });
 
   @override
   State<DocumentUploadScreen> createState() => _DocumentUploadScreenState();
@@ -202,7 +207,7 @@ class _DocumentUploadScreenState extends State<DocumentUploadScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                const CompanyDashboardScreen(),
+                                CompanyDashboardScreen(companyName: widget.companyName),
                           ),
                           (route) =>
                               false, // false = yems7 ga3 l'stack (historique)
@@ -212,7 +217,7 @@ class _DocumentUploadScreenState extends State<DocumentUploadScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                const CompanyDashboardScreen(),
+                                CompanyDashboardScreen(companyName: widget.companyName),
                           ),
                           (route) =>
                               false, // false = yems7 ga3 l'stack (historique)

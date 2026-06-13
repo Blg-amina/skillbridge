@@ -169,7 +169,11 @@ class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    const DocumentUploadScreen(),
+                                    DocumentUploadScreen(
+                                      companyName: _nameController.text.isNotEmpty
+                                          ? _nameController.text
+                                          : 'شركة الابتكار التقني',
+                                    ),
                               ),
                             );
                           },

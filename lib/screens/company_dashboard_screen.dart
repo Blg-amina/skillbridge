@@ -5,7 +5,12 @@ import 'login_screen.dart';
 
 /// Production-ready Company Dashboard Screen matching premium Arabic RTL layout specs.
 class CompanyDashboardScreen extends StatefulWidget {
-  const CompanyDashboardScreen({super.key});
+  final String companyName;
+
+  const CompanyDashboardScreen({
+    super.key,
+    this.companyName = 'شركة الابتكار التقني',
+  });
 
   @override
   State<CompanyDashboardScreen> createState() => _CompanyDashboardScreenState();
@@ -310,12 +315,12 @@ class _CompanyDashboardScreenState extends State<CompanyDashboardScreen>
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'شركة الابتكار التقني',
-                        style: TextStyle(
+                        widget.companyName,
+                        style: const TextStyle(
                           fontFamily: 'Cairo',
                           color: Colors.white,
                           fontSize: 16,
