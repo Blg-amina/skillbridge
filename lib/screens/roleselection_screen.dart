@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jisrelmahara_app/screens/company_registration_screen.dart';
+import 'package:jisrelmahara_app/screens/student_registartion_screen.dart';
 
 class RoleSelectionScreen extends StatefulWidget {
   const RoleSelectionScreen({super.key});
@@ -181,7 +182,16 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                       const CompanyRegistrationScreen(),
                                 ),
                               );
-                            } else {}
+                            } else {
+                              // L'utilisateur kheyyer "طالب / خريج" (Étudiant / Diplômé)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const StudentRegistrationScreen(),
+                                ),
+                              );
+                            }
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF152D4D), // Navy Blue

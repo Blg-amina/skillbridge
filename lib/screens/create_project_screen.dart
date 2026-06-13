@@ -204,7 +204,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     IconButton(
       icon: const Icon(
         Icons.arrow_forward_ios_rounded,
-        color: Colors.white,
+        color: Color.fromARGB(151, 255, 255, 255),
       ),
       onPressed: () => Navigator.of(context).pop(),
     ),
