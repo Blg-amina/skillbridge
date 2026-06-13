@@ -924,10 +924,10 @@ class _CompanyDashboardScreenState extends State<CompanyDashboardScreen>
                     ),
                   ),
                   const SizedBox(height: 16),
-                  _buildCommissionRow('قيمة المشروع', '2,500 دج'),
-                  _buildCommissionRow('العمولة (5%)', '125 دج'),
+                  _buildCommissionRow('قيمة المشروع', '50,000 دج'),
+                  _buildCommissionRow('العمولة (5%)', '2,500 دج'),
                   const Divider(height: 24, color: Colors.grey),
-                  _buildCommissionRow('الإجمالي', '2,625 دج', isBold: true),
+                  _buildCommissionRow('الإجمالي', '52,500 دج', isBold: true),
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
@@ -1053,7 +1053,7 @@ class _CompanyDashboardScreenState extends State<CompanyDashboardScreen>
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        _isPremiumPlan ? (_isAnnual ? '2,990' : '299') : '0',
+                        _isPremiumPlan ? (_isAnnual ? '15,000' : '1,500') : '0',
                         style: const TextStyle(
                           fontFamily: 'Cairo',
                           color: Colors.white,
@@ -1324,7 +1324,7 @@ class _CompanyDashboardScreenState extends State<CompanyDashboardScreen>
               const Divider(height: 24, thickness: 0.8),
               _buildCleanSummaryRow(
                 'المبلغ',
-                '299 دج',
+                '2,500 دج',
                 valueColor: accentGold,
                 isValueBold: true,
               ),
