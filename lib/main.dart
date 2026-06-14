@@ -17,16 +17,14 @@ class SkillBridgeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SkillBridge DZ',
-      debugShowCheckedModeBanner: false, // Bache n7ayou hadik l'bande rouge ta3 "DEBUG"
+      debugShowCheckedModeBanner:
+          false, // Bache n7ayou hadik l'bande rouge ta3 "DEBUG"
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('ar', 'SA'),
-        Locale('en', 'US'),
-      ],
+      supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
       locale: const Locale('ar', 'SA'),
       theme: ThemeData(
         fontFamily: 'Cairo', // L'ecriture li mfahemin 3liha

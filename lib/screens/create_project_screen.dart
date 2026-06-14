@@ -51,7 +51,11 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
   }
 
   void _submitProject() {
+    debugPrint('Submit button pressed');
+    debugPrint('Form valid: ${_formKey.currentState?.validate()}');
+    
     if (_formKey.currentState!.validate()) {
+      debugPrint('Form validation passed');
       setState(() => _isSubmitting = true);
 
       // Simulate API call
@@ -60,6 +64,8 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
         setState(() => _isSubmitting = false);
         _showSuccessDialog();
       });
+    } else {
+      debugPrint('Form validation failed');
     }
   }
 
@@ -70,60 +76,104 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
       builder: (BuildContext context) {
         return Directionality(
           textDirection: TextDirection.rtl,
-          child: AlertDialog(
+          child: Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(24),
             ),
-            icon: const Icon(
-              Icons.check_circle_rounded,
-              color: successGreen,
-              size: 64,
-            ),
-            title: const Text(
-              'تم نشر المشروع بنجاح',
-              style: TextStyle(
-                fontFamily: 'Cairo',
-                fontWeight: FontWeight.bold,
-                color: primaryNavy,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 30,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: successGreen.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.check_circle_rounded,
+                      color: successGreen,
+                      size: 48,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'تم إرسال طلبك بنجاح',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: primaryNavy,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'سيتم مراجعة طلبك والتواصل معك في حال القبول',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 15,
+                      color: textGrey,
+                      height: 1.6,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'نشكرك على اهتمامك',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 14,
+                      color: accentGold,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryNavy,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        'حسناً',
+                        style: TextStyle(
+                          fontFamily: 'Cairo',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            content: const Text(
-              'مشروعك الآن متاح للمستقلين وسيتم إشعارك بالمتقدمين الجدد.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Cairo',
-                fontSize: 14,
-                color: primaryNavy,
-                height: 1.5,
-              ),
-            ),
-            actionsAlignment: MainAxisAlignment.center,
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryNavy,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 12,
-                  ),
-                ),
-                child: const Text(
-                  'العودة للقائمة',
-                  style: TextStyle(
-                    fontFamily: 'Cairo',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
           ),
         );
       },
@@ -204,7 +254,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     IconButton(
       icon: const Icon(
         Icons.arrow_forward_ios_rounded,
-        color: Color.fromARGB(151, 255, 255, 255),
+        color: Colors.white,
       ),
       onPressed: () => Navigator.of(context).pop(),
     ),

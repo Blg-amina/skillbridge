@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jisrelmahara_app/screens/login_screen.dart';
 
 /// Senior Flutter Developer Implementation
 /// Screen: StudentDashboardScreen (Student / Freelancer Profile & Jobs)
@@ -23,7 +25,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen>
   String _searchQuery = '';
 
   // Image Picker State
-  File? _profileImage;
+  XFile? _profileImage;
   final ImagePicker _picker = ImagePicker();
 
   // Categories Dummy Data
@@ -81,6 +83,114 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen>
     super.dispose();
   }
 
+  void _showApplyDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 30,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF2ECC71).withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.check_circle_rounded,
+                      color: Color(0xFF2ECC71),
+                      size: 48,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'تم إرسال طلبك بنجاح',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF152D4D),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'سيتم مراجعة طلبك والتواصل معك في حال القبول',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 15,
+                      color: Color(0xFF7F8C8D),
+                      height: 1.6,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'نشكرك على اهتمامك',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 14,
+                      color: Color(0xFFF2A81D),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF152D4D),
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        'حسناً',
+                        style: TextStyle(
+                          fontFamily: 'Cairo',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   // دالة لاختيار الصورة من الهاتف
   Future<void> _pickProfileImage() async {
     try {
@@ -89,7 +199,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen>
       );
       if (pickedImage != null) {
         setState(() {
-          _profileImage = File(pickedImage.path);
+          _profileImage = pickedImage;
         });
       }
     } catch (e) {
@@ -180,7 +290,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen>
                     shape: BoxShape.circle,
                     image: _profileImage != null
                         ? DecorationImage(
-                            image: FileImage(_profileImage!),
+                            image: kIsWeb
+                                ? NetworkImage(_profileImage!.path)
+                                : FileImage(File(_profileImage!.path)),
                             fit: BoxFit.cover,
                           )
                         : null,
@@ -221,16 +333,37 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen>
               // Back Button
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
-                  shape: BoxShape.circle,
+                  color: Colors.white.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Colors.white,
-                    size: 18,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.logout_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          "تسجيل الخروج",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
-                  onPressed: () => Navigator.pop(context),
                 ),
               ),
             ],
@@ -584,7 +717,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen>
             width: double.infinity,
             height: 44,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => _showApplyDialog(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF152D4D),
                 shape: RoundedRectangleBorder(
@@ -715,12 +848,19 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen>
                       child: _profileImage != null
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(16),
-                              child: Image.file(
-                                _profileImage!,
-                                fit: BoxFit.cover,
-                                width: 60,
-                                height: 60,
-                              ),
+                              child: kIsWeb
+                                  ? Image.network(
+                                      _profileImage!.path,
+                                      fit: BoxFit.cover,
+                                      width: 60,
+                                      height: 60,
+                                    )
+                                  : Image.file(
+                                      File(_profileImage!.path),
+                                      fit: BoxFit.cover,
+                                      width: 60,
+                                      height: 60,
+                                    ),
                             )
                           : const Icon(
                               Icons.computer,
