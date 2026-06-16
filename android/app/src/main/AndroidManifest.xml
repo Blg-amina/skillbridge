@@ -3,7 +3,7 @@
 <!-- هذا السطر ضروري لـ Android 13 وما فوق -->
 <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <application
-        android:label="jisrelmahara_app"
+        android:label="SkillBridge DZ"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

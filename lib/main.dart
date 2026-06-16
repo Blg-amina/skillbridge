@@ -27,6 +27,7 @@ class SkillBridgeApp extends StatelessWidget {
       supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
       locale: const Locale('ar', 'SA'),
       theme: ThemeData(
+
         fontFamily: 'Cairo', // L'ecriture li mfahemin 3liha
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF152D4D), // Navy Blue
